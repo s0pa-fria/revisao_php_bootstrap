@@ -4,14 +4,14 @@
 include_once "conexao.php";
 
 // Receber o ID via método GET
-$pagina = filter_input(INPUT_GET, "id", FILTER_SANITIZE_NUMBER_INT);
+$id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_NUMBER_INT);
 
 // Verifica sw o ID não está vazio
 if (!empty($id)) {
     // Query para selecionar informações do usuário e enderço associado
     $query_usuario = "SELECT usr.id, usr.nome, usr.email,
             ende.logradouro, ende.numero
-            FROM usuario AS usr
+            FROM usuarios AS usr
             LEFT JOIN enderecos AS ende ON ende.usuario_id=usr.id
             WHERE usr.id=:id LIMIT 1";
     $result_usuario = $conn-> prepare($query_usuario);
@@ -29,5 +29,8 @@ if (!empty($id)) {
     }
 } else {
     // Se o ID estiver vazio, retorna uma mensagem de erro
-    $retorna = ['status' =>]
+    $retorna = ['status' => false, 'msg' => "<div class='alert-danger' role='alert'>Erro: Nenhum usuário encontrado!</div>"];
 }
+
+// Retorna o resultado em formato JSON
+echo json_encode($retorna);
