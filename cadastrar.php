@@ -29,7 +29,7 @@ if (empty($dados['nome'])) {
         $id_usuario = $conn->lastInsertId();
 
         // Cadastrar no banco de dados na segunda tabela (endereço) associada ao usuário
-        $query_endereco = "INSERT INTO enderecos (logradouro, numero, usuario_id) VALUES (:logradouro, :nome, :usuario_id)";
+        $query_endereco = "INSERT INTO enderecos (logradouro, numero, usuario_id) VALUES (:logradouro, :numero, :usuario_id)";
         $cad_endereco = $conn->prepare($query_endereco);
         $cad_endereco->bindParam(':logradouro', $dados['logradouro']);
         $cad_endereco->bindParam(':numero', $dados['numero']);
